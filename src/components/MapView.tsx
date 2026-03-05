@@ -99,8 +99,8 @@ export default function MapView({ selectedStoreId, onMarkerClick }: MapViewProps
                     .select('*');
                 if (error) throw error;
                 setStores(data || []);
-            } catch (err) {
-                console.error('Error fetching stores:', err);
+            } catch (err: any) {
+                console.error('Error fetching stores:', err?.message || err?.code || JSON.stringify(err));
             } finally {
                 setLoading(false);
             }

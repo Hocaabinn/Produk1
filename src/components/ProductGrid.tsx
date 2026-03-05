@@ -36,8 +36,8 @@ export default function ProductGrid({ selectedStoreId }: ProductGridProps) {
             const { data, error } = await query;
             if (error) throw error;
             setProducts(data || []);
-        } catch (err) {
-            console.error('Error fetching products:', err);
+        } catch (err: any) {
+            console.error('Error fetching products:', err?.message || err?.code || JSON.stringify(err));
             setProducts([]);
         } finally {
             setLoading(false);
