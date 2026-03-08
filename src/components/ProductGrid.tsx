@@ -5,7 +5,6 @@ import { supabase } from '@/app/lib/supabase';
 import type { Product } from '@/types';
 import ProductCard from './ProductCard';
 import ReservationModal from './ReservationModal';
-import { PackageOpen } from 'lucide-react';
 
 interface ProductGridProps {
     selectedStoreId: string | null;
@@ -68,19 +67,42 @@ export default function ProductGrid({ selectedStoreId }: ProductGridProps) {
 
     if (products.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-16 dark:border-gray-700">
-                <PackageOpen className="mb-4 h-16 w-16 text-gray-300 dark:text-gray-600" />
-                <h3 className="mb-2 text-lg font-semibold text-gray-500 dark:text-gray-400">
-                    No food available
-                </h3>
-                <p className="text-sm text-gray-400 dark:text-gray-500">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-100 bg-gradient-to-b from-green-50/60 to-white px-6 py-20 text-center shadow-sm">
+                {/* Cheerful illustration */}
+                <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-white shadow-md ring-1 ring-gray-100 text-5xl select-none">
+                    🍽️
+                </div>
+
+                <h3 className="mb-2 text-xl font-bold text-gray-800">
                     {selectedStoreId
-                        ? 'This store has no surplus food right now. Try another store!'
-                        : 'Check back soon for surplus food deals from local stores.'}
+                        ? 'Toko ini sedang kehabisan stok'
+                        : 'Belum ada makanan tersedia saat ini'}
+                </h3>
+                <p className="mb-8 max-w-xs text-sm leading-relaxed text-gray-500">
+                    {selectedStoreId
+                        ? 'Coba toko lain atau pantau terus — stok baru sering datang setiap hari!'
+                        : 'Stok makanan dari toko-toko lokal biasanya diperbarui tiap hari. Tetap pantau ya!'}
                 </p>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col gap-3 sm:flex-row">
+                    <button
+                        onClick={() => alert('Fitur notifikasi segera hadir!')}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-green-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-green-600 hover:shadow-md active:scale-95"
+                    >
+                        🔔 Ingatkan Saya Jika Ada Stok
+                    </button>
+                    <button
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-600 shadow-sm transition-all hover:border-green-200 hover:bg-green-50 hover:text-green-700 active:scale-95"
+                    >
+                        🗺️ Lihat Toko Mitra Terdekat
+                    </button>
+                </div>
             </div>
         );
     }
+
 
     return (
         <>
