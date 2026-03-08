@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Leaf, ArrowRight, ArrowDown, MapPin, X, TrendingDown, Zap, ChevronDown, Sparkles, ShoppingBag } from 'lucide-react';
+import { Leaf, ArrowRight, MapPin, X, TrendingDown, Zap, ChevronDown, Sparkles, ShoppingBag } from 'lucide-react';
 import MapWrapper from '@/components/MapWrapper';
 import ProductGrid from '@/components/ProductGrid';
 import Image from 'next/image';
@@ -20,38 +20,51 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section — Fullscreen Background Image */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden bg-zinc-950">
+      {/* Hero Section — Full Viewport Portfolio-style */}
+      <section className="relative h-screen flex flex-col overflow-hidden bg-zinc-950">
         {/* Background Image */}
         <Image
           src="/hero-bg.jpg"
           alt="PlateRescue store background"
           fill
           priority
-          className="object-cover object-center brightness-[0.7]"
+          className="object-cover object-center brightness-[0.65]"
           sizes="100vw"
         />
 
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
 
-        {/* Center Content — Ukuran heading diperkecil sedikit */}
-        <div className="relative z-10 mx-auto w-full max-w-5xl px-5 flex flex-col items-center text-center mt-auto mb-auto pt-20 pb-32">
-          <p className="animate-hero-slide-up font-display text-lg sm:text-xl italic text-white/90 mb-2">
+        {/* Center Content — perfectly centered */}
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5">
+          <p className="animate-hero-slide-up font-display text-xl sm:text-2xl italic text-white/80 mb-5 tracking-wide">
             Selamatkan rasa dari
           </p>
 
-          <h1 className="animate-hero-slide-up-d1 font-display text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-extrabold text-white tracking-tighter !leading-[0.8] lowercase">
+          <h1 className="animate-hero-slide-up-d1 font-display text-8xl sm:text-9xl md:text-[11rem] lg:text-[13rem] font-extrabold text-white tracking-tighter !leading-[0.85] lowercase">
             platerescue
           </h1>
 
-          <p className="animate-hero-slide-up-d2 mt-6 text-xs sm:text-sm leading-relaxed text-white/70 max-w-md mx-auto">
+          <p className="animate-hero-slide-up-d2 mt-10 text-sm sm:text-base leading-relaxed text-white/65 max-w-lg mx-auto">
             Temukan makanan berlebih dari toko-toko sekitarmu dengan harga yang jauh lebih murah. Hemat uang, kurangi limbah, selamatkan bumi.
           </p>
+
+          {/* CTA Button */}
+          <div className="animate-hero-slide-up-d3 mt-12">
+            <a
+              href="#marketplace"
+              className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/40 px-8 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300"
+            >
+              Jelajahi Makanan
+              <div className="bg-white text-black rounded-full p-1.5 transition-transform duration-300 group-hover:translate-x-1">
+                <ArrowRight className="h-3.5 w-3.5" />
+              </div>
+            </a>
+          </div>
         </div>
 
-        {/* Bottom Left — Info Card (Dikecilkan sedikit) */}
-        <div className="animate-hero-slide-up-d3 absolute bottom-6 left-6 z-10">
+        {/* Bottom Left — Info Card */}
+        <div className="animate-hero-slide-up-d4 absolute bottom-8 left-6 z-10">
           <div className="flex items-center gap-3 rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/10 pl-5 pr-3 py-3 shadow-2xl">
             <div className="pr-1">
               <p className="text-sm font-bold text-white leading-tight">2,400+ Porsi</p>
@@ -67,33 +80,13 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom Right — Container Pojok Lebih Ramping */}
-        <div className="animate-hero-slide-up-d4 absolute bottom-0 right-0 z-10 flex flex-col items-end">
-          {/* Scroll Arrow */}
-          <a
-            href="#marketplace"
-            className="mr-8 mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-amber-500/50 text-amber-500 transition-all hover:bg-amber-500/10"
-          >
-            <ArrowDown className="h-4 w-4 animate-bounce" />
+        {/* Bottom Center — Scroll Indicator */}
+        <div className="animate-hero-slide-up-d5 absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+          <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/40">Scroll</span>
+          <a href="#marketplace" className="flex flex-col items-center gap-1 group">
+            <div className="h-10 w-px bg-gradient-to-b from-white/40 to-transparent" />
+            <ChevronDown className="h-4 w-4 text-white/40 group-hover:text-white/70 animate-bounce transition-colors" />
           </a>
-
-          {/* CTA Area — Inverted Border Radius yang lebih compact */}
-          <div className="relative bg-white pt-4 pl-6 pb-6 pr-6 rounded-tl-[35px]">
-            {/* Magic Curve Elements */}
-            <div className="absolute -top-[35px] right-0 h-[35px] w-[35px] shadow-[15px_15px_0_0_white] pointer-events-none" />
-            <div className="absolute bottom-0 -left-[35px] h-[35px] w-[35px] shadow-[15px_15px_0_0_white] pointer-events-none" />
-
-            {/* Button Style: Pill with Arrow Circle */}
-            <a
-              href="#marketplace"
-              className="group flex items-center gap-3 bg-zinc-100 hover:bg-zinc-200 px-6 py-3 rounded-full text-sm font-bold text-black transition-all"
-            >
-              Jelajahi Makanan
-              <div className="bg-black text-white rounded-full p-1.5 transition-transform group-hover:translate-x-1">
-                <ArrowRight className="h-3.5 w-3.5" />
-              </div>
-            </a>
-          </div>
         </div>
       </section>
       {/* Map Section */}
