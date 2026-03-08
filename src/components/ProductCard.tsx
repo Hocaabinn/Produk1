@@ -50,7 +50,7 @@ export default function ProductCard({ product, onRescue }: ProductCardProps) {
     };
 
     return (
-        <div className="animate-fade-in group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-green-500/5 hover:-translate-y-1 dark:border-gray-800 dark:bg-card-dark">
+        <div className="animate-fade-in group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-green-500/5 hover:-translate-y-1">
             {/* Image */}
             <div className="relative h-48 overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20">
                 {product.image_url ? (
@@ -61,7 +61,7 @@ export default function ProductCard({ product, onRescue }: ProductCardProps) {
                     />
                 ) : (
                     <div className="flex h-full w-full items-center justify-center">
-                        <ShoppingBag className="h-16 w-16 text-green-200 dark:text-green-800" />
+                        <ShoppingBag className="h-16 w-16 text-green-200" />
                     </div>
                 )}
 

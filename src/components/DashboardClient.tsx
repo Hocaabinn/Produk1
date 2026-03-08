@@ -25,7 +25,7 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="relative overflow-hidden bg-white dark:bg-gray-900 pb-16 pt-20 sm:pb-24 sm:pt-32 lg:pb-32">
+            <section className="relative overflow-hidden bg-white pb-16 pt-20 sm:pb-24 sm:pt-32 lg:pb-32">
                 {/* Decorative Background Blobs */}
                 <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
                     <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#86efac] to-[#3b82f6] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
@@ -40,7 +40,7 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
                         <div className="lg:col-span-6 flex flex-col justify-center text-center lg:text-left">
                             {/* Badge */}
                             <div className="mb-8 flex justify-center lg:justify-start">
-                                <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:text-gray-300 dark:ring-gray-700">
+                                <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                                     Rescuing food, one meal at a time.{' '}
                                     <a href="#marketplace" className="font-semibold text-green-600">
                                         <span className="absolute inset-0" aria-hidden="true" />
@@ -49,11 +49,11 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
                                 </div>
                             </div>
 
-                            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+                            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                                 Save Food, <br className="hidden lg:block" />
                                 <span className="text-green-600">Save Money.</span>
                             </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                            <p className="mt-6 text-lg leading-8 text-gray-600">
                                 Join thousands of food heroes rescuing surplus meals from local stores at unbeatably low prices. Eat well while helping the planet.
                             </p>
 
@@ -64,7 +64,7 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
                                 >
                                     Browse Available Food
                                 </a>
-                                <a href="/register" className="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-green-600 transition-colors">
+                                <a href="/register" className="text-sm font-semibold leading-6 text-gray-900 hover:text-green-600 transition-colors">
                                     Become a Partner <span aria-hidden="true">→</span>
                                 </a>
                             </div>
@@ -80,39 +80,39 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
                                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 lg:gap-8">
                                     {/* Card 1: Savings */}
                                     <div className="sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:mt-12">
-                                        <div className="relative flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 dark:bg-gray-800 dark:ring-gray-700 transform transition-transform hover:scale-105 duration-300">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-green-600 dark:bg-green-900/30">
+                                        <div className="relative flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 transform transition-transform hover:scale-105 duration-300">
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-green-600">
                                                 <TrendingDown className="h-6 w-6" />
                                             </div>
                                             <div>
-                                                <p className="text-lg font-bold text-gray-900 dark:text-white">50% Average Savings</p>
-                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Get premium food for a fraction of the cost.</p>
+                                                <p className="text-lg font-bold text-gray-900">50% Average Savings</p>
+                                                <p className="mt-1 text-sm text-gray-500">Get premium food for a fraction of the cost.</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Card 2: Environment */}
                                     <div className="lg:col-span-1">
-                                        <div className="relative flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 dark:bg-gray-800 dark:ring-gray-700 transform transition-transform hover:scale-105 duration-300">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30">
+                                        <div className="relative flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 transform transition-transform hover:scale-105 duration-300">
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                                                 <Leaf className="h-6 w-6" />
                                             </div>
                                             <div>
-                                                <p className="text-lg font-bold text-gray-900 dark:text-white">{co2Saved}kg CO₂</p>
-                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Every meal rescued fights climate change.</p>
+                                                <p className="text-lg font-bold text-gray-900">{co2Saved}kg CO₂</p>
+                                                <p className="mt-1 text-sm text-gray-500">Every meal rescued fights climate change.</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Card 3: Speed/Ease */}
                                     <div className="lg:col-span-1">
-                                        <div className="relative flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 dark:bg-gray-800 dark:ring-gray-700 transform transition-transform hover:scale-105 duration-300">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-50 text-yellow-600 dark:bg-yellow-900/30">
+                                        <div className="relative flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 transform transition-transform hover:scale-105 duration-300">
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-50 text-yellow-600">
                                                 <Zap className="h-6 w-6" />
                                             </div>
                                             <div>
-                                                <p className="text-lg font-bold text-gray-900 dark:text-white">3 Clicks</p>
-                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Reserve your bag in seconds.</p>
+                                                <p className="text-lg font-bold text-gray-900">3 Clicks</p>
+                                                <p className="mt-1 text-sm text-gray-500">Reserve your bag in seconds.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -126,11 +126,11 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
             {/* Map Section */}
             <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mb-6 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/30">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100">
                         <MapPin className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                        <h2 className="text-xl font-bold text-gray-900">
                             Nearby Stores
                         </h2>
                         <p className="text-sm text-muted">
@@ -139,7 +139,7 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
                     </div>
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm dark:border-gray-800">
+                <div className="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
                     <MapWrapper
                         selectedStoreId={selectedStoreId}
                         onMarkerClick={handleMarkerClick}
@@ -151,7 +151,7 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
             <section id="marketplace" className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
                 <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                        <h2 className="text-xl font-bold text-gray-900">
                             {selectedStoreId ? 'Filtered Results' : 'Available Food Near You'}
                         </h2>
                         <p className="text-sm text-muted">
@@ -164,7 +164,7 @@ export default function DashboardClient({ co2Saved }: DashboardClientProps) {
                     {selectedStoreId && (
                         <button
                             onClick={clearFilter}
-                            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-card-dark dark:text-gray-300 dark:hover:bg-gray-800"
+                            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:bg-gray-50"
                         >
                             <X className="h-3.5 w-3.5" />
                             Clear Filter

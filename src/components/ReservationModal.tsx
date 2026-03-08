@@ -130,15 +130,15 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
             className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
             onClick={(e) => e.target === e.currentTarget && onClose()}
         >
-            <div className="animate-scale-in w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-card-dark">
+            <div className="animate-scale-in w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 dark:border-gray-800">
-                    <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+                    <h2 className="text-lg font-bold text-gray-900">
                         {pickupCode ? '🎉 Rescue Berhasil!' : 'Rescue This Food'}
                     </h2>
                     <button
                         onClick={onClose}
-                        className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
                     >
                         <X className="h-5 w-5" />
                     </button>
@@ -152,7 +152,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                                 <LogIn className="h-8 w-8 text-amber-600 dark:text-amber-400" />
                             </div>
                             <div>
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                <h3 className="text-lg font-semibold text-gray-900">
                                     Login Required
                                 </h3>
                                 <p className="mt-1 text-sm text-muted">
@@ -169,7 +169,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                                 </Link>
                                 <Link
                                     href="/register"
-                                    className="flex w-full items-center justify-center rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+                                    className="flex w-full items-center justify-center rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
                                 >
                                     Create Account
                                 </Link>
@@ -188,7 +188,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
 
                             {/* Success heading */}
                             <div>
-                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                <h3 className="text-2xl font-bold text-gray-900">
                                     🎉 Rescue Berhasil!
                                 </h3>
                                 <p className="mt-1 text-sm text-muted">
@@ -207,7 +207,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                                     </span>
                                     <button
                                         onClick={handleCopyCode}
-                                        className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-gray-500 shadow-sm transition-all hover:bg-green-100 hover:text-green-600 dark:bg-gray-800 dark:hover:bg-gray-700"
+                                        className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-gray-500 shadow-sm transition-all hover:bg-green-100 hover:text-green-600"
                                         title="Salin kode"
                                     >
                                         {copied ? (
@@ -225,20 +225,20 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                             </div>
 
                             {/* Order Summary */}
-                            <div className="w-full space-y-3 rounded-xl bg-gray-50 p-4 text-left dark:bg-gray-800/50">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                            <div className="w-full space-y-3 rounded-xl bg-gray-50 p-4 text-left">
+                                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
                                     Detail Pesanan
                                 </p>
                                 <div className="flex items-center justify-between text-sm">
                                     <div className="flex items-center gap-2">
                                         <ShoppingBag className="h-4 w-4 text-gray-400" />
-                                        <span className="text-gray-700 dark:text-gray-300">{product.title}</span>
+                                        <span className="text-gray-700">{product.title}</span>
                                     </div>
-                                    <span className="font-medium text-gray-900 dark:text-white">×{quantity}</span>
+                                    <span className="font-medium text-gray-900">×{quantity}</span>
                                 </div>
-                                <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
+                                <div className="border-t border-gray-200 pt-2">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Total</span>
+                                        <span className="text-sm font-medium text-gray-600">Total</span>
                                         <span className="text-lg font-bold text-primary">
                                             Rp{totalPrice.toLocaleString('id-ID')}
                                         </span>
@@ -265,7 +265,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                                 </Link>
                                 <button
                                     onClick={() => { onSuccess?.(); onClose(); }}
-                                    className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+                                    className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-50"
                                 >
                                     Tutup
                                 </button>
@@ -311,25 +311,25 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                             </div>
 
                             {/* Quantity selector */}
-                            <div className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
-                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <div className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3">
+                                <span className="text-sm font-medium text-gray-700">
                                     Quantity
                                 </span>
                                 <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
                                         disabled={quantity <= 1}
-                                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition-colors hover:bg-gray-100 disabled:opacity-40 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
+                                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition-colors hover:bg-gray-100 disabled:opacity-40"
                                     >
                                         <Minus className="h-4 w-4" />
                                     </button>
-                                    <span className="w-8 text-center text-lg font-bold text-gray-900 dark:text-white">
+                                    <span className="w-8 text-center text-lg font-bold text-gray-900">
                                         {quantity}
                                     </span>
                                     <button
                                         onClick={() => setQuantity(Math.min(maxQuantity, quantity + 1))}
                                         disabled={quantity >= maxQuantity}
-                                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition-colors hover:bg-gray-100 disabled:opacity-40 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700"
+                                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition-colors hover:bg-gray-100 disabled:opacity-40"
                                     >
                                         <Plus className="h-4 w-4" />
                                     </button>
@@ -338,7 +338,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
 
                             {/* Total */}
                             <div className="flex items-center justify-between rounded-xl border-2 border-green-100 px-4 py-3 dark:border-green-900/30">
-                                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Total</span>
+                                <span className="text-sm font-medium text-gray-600">Total</span>
                                 <span className="text-xl font-bold text-primary">
                                     Rp{totalPrice.toLocaleString('id-ID')}
                                 </span>

@@ -93,7 +93,7 @@ export default function RegisterPage() {
                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-dark shadow-lg shadow-green-500/20">
                         <Leaf className="h-7 w-7 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <h1 className="text-2xl font-bold text-gray-900">
                         Create your account
                     </h1>
                     <p className="mt-1 text-sm text-muted">
@@ -102,11 +102,11 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Form Card */}
-                <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50 dark:border-gray-800 dark:bg-card-dark dark:shadow-none">
+                <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-6">
                         {/* Error */}
                         {error && (
-                            <div className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-400">
+                            <div className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
                                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                                 {error}
                             </div>
@@ -114,7 +114,7 @@ export default function RegisterPage() {
 
                         {/* Role selector */}
                         <div>
-                            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
                                 I am a...
                             </label>
                             <div className="grid grid-cols-2 gap-3">
@@ -124,20 +124,20 @@ export default function RegisterPage() {
                                         type="button"
                                         onClick={() => setRole(r.value)}
                                         className={`flex flex-col items-center gap-2 rounded-xl border-2 px-4 py-4 text-center transition-all ${role === r.value
-                                            ? 'border-primary bg-green-50 text-primary shadow-md shadow-green-500/10 dark:bg-green-900/20'
-                                            : 'border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:bg-gray-800'
+                                            ? 'border-primary bg-green-50 text-primary shadow-md shadow-green-500/10'
+                                            : 'border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-50'
                                             }`}
                                     >
                                         <div
                                             className={`flex h-10 w-10 items-center justify-center rounded-xl ${role === r.value
                                                 ? 'bg-primary text-white'
-                                                : 'bg-gray-100 text-gray-400 dark:bg-gray-800'
+                                                : 'bg-gray-100 text-gray-400'
                                                 }`}
                                         >
                                             {r.icon}
                                         </div>
                                         <div>
-                                            <p className={`text-sm font-semibold ${role === r.value ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}`}>
+                                            <p className={`text-sm font-semibold ${role === r.value ? 'text-primary' : 'text-gray-700'}`}>
                                                 {r.label}
                                             </p>
                                             <p className="mt-0.5 text-xs text-muted">{r.desc}</p>
@@ -149,7 +149,7 @@ export default function RegisterPage() {
 
                         {/* Full Name */}
                         <div>
-                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700">
                                 <User className="h-4 w-4 text-muted" />
                                 Full Name
                             </label>
@@ -159,13 +159,13 @@ export default function RegisterPage() {
                                 onChange={(e) => setFullName(e.target.value)}
                                 required
                                 placeholder="John Doe"
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:bg-gray-800"
+                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                             />
                         </div>
 
                         {/* Email */}
                         <div>
-                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700">
                                 <Mail className="h-4 w-4 text-muted" />
                                 Email
                             </label>
@@ -175,13 +175,13 @@ export default function RegisterPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 placeholder="you@example.com"
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:bg-gray-800"
+                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                             />
                         </div>
 
                         {/* Password */}
                         <div>
-                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700">
                                 <Lock className="h-4 w-4 text-muted" />
                                 Password
                             </label>
@@ -192,12 +192,12 @@ export default function RegisterPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     placeholder="Min. 6 characters"
-                                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-11 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:bg-gray-800"
+                                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-11 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                 >
                                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                 </button>
@@ -206,7 +206,7 @@ export default function RegisterPage() {
 
                         {/* Confirm Password */}
                         <div>
-                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700">
                                 <Lock className="h-4 w-4 text-muted" />
                                 Confirm Password
                             </label>
@@ -216,7 +216,7 @@ export default function RegisterPage() {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                                 placeholder="Repeat password"
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:bg-gray-800"
+                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                             />
                         </div>
 
@@ -238,7 +238,7 @@ export default function RegisterPage() {
                     </form>
 
                     {/* Footer */}
-                    <div className="border-t border-gray-100 bg-gray-50/50 px-6 py-4 text-center dark:border-gray-800 dark:bg-gray-900/30">
+                    <div className="border-t border-gray-100 bg-gray-50/50 px-6 py-4 text-center">
                         <p className="text-sm text-muted">
                             Already have an account?{' '}
                             <Link

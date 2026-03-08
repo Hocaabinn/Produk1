@@ -44,7 +44,7 @@ export default function LoginPage() {
                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-dark shadow-lg shadow-green-500/20">
                         <Leaf className="h-7 w-7 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <h1 className="text-2xl font-bold text-gray-900">
                         Welcome back
                     </h1>
                     <p className="mt-1 text-sm text-muted">
@@ -53,7 +53,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* Form Card */}
-                <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50 dark:border-gray-800 dark:bg-card-dark dark:shadow-none">
+                <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-6">
                         {/* Error */}
                         {error && (
@@ -65,7 +65,7 @@ export default function LoginPage() {
 
                         {/* Email */}
                         <div>
-                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700">
                                 <Mail className="h-4 w-4 text-muted" />
                                 Email
                             </label>
@@ -75,13 +75,13 @@ export default function LoginPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 placeholder="you@example.com"
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:bg-gray-800"
+                                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                             />
                         </div>
 
                         {/* Password */}
                         <div>
-                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-gray-700">
                                 <Lock className="h-4 w-4 text-muted" />
                                 Password
                             </label>
@@ -92,12 +92,12 @@ export default function LoginPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     placeholder="••••••••"
-                                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-11 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:bg-gray-800"
+                                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-11 text-sm text-gray-900 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                 >
                                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                 </button>
@@ -122,7 +122,7 @@ export default function LoginPage() {
                     </form>
 
                     {/* Footer */}
-                    <div className="border-t border-gray-100 bg-gray-50/50 px-6 py-4 text-center dark:border-gray-800 dark:bg-gray-900/30">
+                    <div className="border-t border-gray-100 bg-gray-50/50 px-6 py-4 text-center">
                         <p className="text-sm text-muted">
                             Don&apos;t have an account?{' '}
                             <Link

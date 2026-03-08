@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
+/* Disable dark mode — always use light/white theme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -10,11 +13,11 @@
   --color-accent: #f59e0b;
   --color-accent-light: #fbbf24;
   --color-danger: #ef4444;
-  --color-surface: #f8faf8;
-  --color-surface-dark: #111711;
+  --color-surface: #F5F5F5;
+  --color-surface-dark: #F5F5F5;
   --color-muted: #6b7280;
   --color-card: #ffffff;
-  --color-card-dark: #1a1f1a;
+  --color-card-dark: #ffffff;
   --color-badge-green: #dcfce7;
   --color-badge-green-text: #166534;
   --color-badge-orange: #fff7ed;
@@ -26,15 +29,8 @@
 }
 
 :root {
-  --background: #f8faf8;
+  --background: #FFFFFF;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0f0a;
-    --foreground: #ededed;
-  }
 }
 
 * {
@@ -172,6 +168,7 @@ h6 {
 }
 
 @keyframes hero-float {
+
   0%,
   100% {
     transform: translateY(0);
@@ -183,6 +180,7 @@ h6 {
 }
 
 @keyframes hero-blob {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -202,6 +200,7 @@ h6 {
 }
 
 @keyframes hero-glow-pulse {
+
   0%,
   100% {
     box-shadow: 0 0 20px rgba(22, 163, 74, 0.3);
