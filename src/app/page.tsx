@@ -21,61 +21,74 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section — Full Viewport Portfolio-style */}
-      <section className="relative h-screen flex flex-col overflow-hidden bg-zinc-950">
-        {/* Background Image */}
-        <Image
-          src="/hero-bg.jpg"
-          alt="PlateRescue store background"
-          fill
-          priority
-          className="object-cover object-center brightness-[0.65]"
-          sizes="100vw"
-        />
+      {/* Hero Section — Minimalist Apple-style approach */}
+      <section className="relative h-screen flex flex-col overflow-hidden bg-white">
+        {/* Background Image - Macro Photography */}
+        <div className="absolute inset-0 z-0 h-full w-full">
+          <Image
+            src="/hero-fresh.png"
+            alt="Fresh macro photography of organic food"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+            quality={100}
+          />
+        </div>
 
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
+        {/* Soft Light Overlay to ensure text readability without making it dark */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-white/90 via-white/50 to-white/30 backdrop-blur-[2px]" />
 
-        {/* Center Content — perfectly centered */}
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 pb-16">
-          <p className="animate-hero-slide-up font-display text-base sm:text-xl italic text-white/80 mb-3 tracking-wide">
-            Selamatkan rasa dari
-          </p>
+        {/* Center Content — Refined and minimalist */}
+        <div className="relative z-20 flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 mt-16 max-w-5xl mx-auto">
+          <span className="animate-hero-slide-up inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/50 px-3 py-1 text-xs font-semibold text-primary backdrop-blur-md mb-6 uppercase tracking-widest shadow-sm">
+            Tingkatkan Dampak Positif
+          </span>
 
-          <h1 className="animate-hero-slide-up-d1 font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold text-white tracking-tighter !leading-[0.85] lowercase">
-            platerescue
+          <h1 className="animate-hero-slide-up-d1 font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-gray-900 mb-6 drop-shadow-sm">
+            Plate<span className="text-primary">Rescue</span>
           </h1>
 
-          <p className="animate-hero-slide-up-d2 mt-5 text-sm sm:text-base leading-relaxed text-white/65 max-w-md mx-auto">
-            Temukan makanan berlebih dari toko-toko sekitarmu dengan harga yang jauh lebih murah. Hemat uang, kurangi limbah, selamatkan bumi.
+          <p className="animate-hero-slide-up-d2 text-base md:text-lg lg:text-xl font-medium leading-relaxed text-gray-700 max-w-2xl mx-auto mb-10 drop-shadow-sm">
+            Temukan surplus makanan lezat dari toko lokal favorit Anda.<br className="hidden sm:block" />
+            Hemat pengeluaran, kurangi limbah pangan, dan berkontribusi untuk pelestarian bumi.
           </p>
 
-          {/* CTA Button */}
-          <div className="animate-hero-slide-up-d3 mt-7">
+          {/* CTA Buttons - Clean glassmorphism */}
+          <div className="animate-hero-slide-up-d3 mt-2 flex flex-col sm:flex-row items-center gap-4">
             <a
               href="#marketplace"
-              className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/40 px-8 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300"
+              className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white shadow-md shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30"
             >
               Jelajahi Makanan
-              <div className="bg-white text-black rounded-full p-1.5 transition-transform duration-300 group-hover:translate-x-1">
-                <ArrowRight className="h-3.5 w-3.5" />
+              <div className="rounded-full bg-white/20 p-1 transition-transform duration-300 group-hover:translate-x-1">
+                <ArrowRight className="h-4 w-4 text-white" />
               </div>
+            </a>
+
+            <a
+              href="#how-it-works"
+              className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-white/60 px-8 py-3.5 text-sm font-semibold text-gray-800 border border-gray-200 shadow-sm backdrop-blur-md transition-all hover:bg-white/80"
+            >
+              Pelajari Cara Kerja
             </a>
           </div>
         </div>
 
-        {/* Bottom Center — Scroll Indicator */}
-        <div className="animate-hero-slide-up-d5 absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-          <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/40">Scroll</span>
-          <a href="#marketplace" className="flex flex-col items-center gap-1 group">
-            <div className="h-10 w-px bg-gradient-to-b from-white/40 to-transparent" />
-            <ChevronDown className="h-4 w-4 text-white/40 group-hover:text-white/70 animate-bounce transition-colors" />
+        {/* Bottom Center — Elegant Scroll Indicator */}
+        <div className="animate-hero-slide-up-d5 absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-500">Scroll</span>
+          <a href="#how-it-works" className="flex flex-col items-center gap-2 group p-2">
+            <div className="h-12 w-px bg-gradient-to-b from-gray-300 to-transparent" />
+            <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-primary transition-colors" />
           </a>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <HowItWorks />
+      <div id="how-it-works">
+        <HowItWorks />
+      </div>
 
       {/* Map Section */}
       <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
