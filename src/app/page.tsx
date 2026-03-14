@@ -46,7 +46,7 @@ export default function Home() {
           </span>
 
           <h1 className="animate-hero-slide-up-d1 font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-gray-900 mb-6 drop-shadow-sm">
-            Plate<span className="text-primary">Rescue</span>
+            Surplus<span className="text-primary">Hub</span>
           </h1>
 
           <p className="animate-hero-slide-up-d2 text-base md:text-lg lg:text-xl font-medium leading-relaxed text-gray-700 max-w-2xl mx-auto mb-10 drop-shadow-sm">

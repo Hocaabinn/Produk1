@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
-  title: "PlateRescue — Save Food, Save the Planet",
+  title: "SurplusHub — Save Food, Save the Planet",
   description:
     "Rescue surplus food from local stores at discounted prices. Reduce food waste and save money while helping the environment.",
   icons: {

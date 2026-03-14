@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Leaf, Menu, X, Store, ShoppingBag, LogIn, LogOut, UserCircle, ScanBarcode } from 'lucide-react';
@@ -21,10 +20,10 @@ export default function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white shadow-sm transition-transform group-hover:scale-105">
-                        <Image src="/icon.png" alt="PlateRescue Logo" width={24} height={24} className="h-5 w-5 object-contain brightness-0 invert" />
+                        <Leaf className="h-5 w-5 animate-in" />
                     </div>
                     <span className="text-xl font-bold tracking-tight text-gray-900">
-                        Plate<span className="text-primary">Rescue</span>
+                        Surplus<span className="text-primary">Hub</span>
                     </span>
                 </Link>
 
@@ -35,7 +34,7 @@ export default function Navbar() {
                         className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-primary"
                     >
                         <ShoppingBag className="h-4 w-4" />
-                        Marketplace
+                        Dashboard
                     </Link>
 
                     {/* Consumer Links */}
@@ -57,7 +56,7 @@ export default function Navbar() {
                                 className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-primary"
                             >
                                 <Store className="h-4 w-4" />
-                                Dashboard
+                                Merchant
                             </Link>
                             <Link
                                 href="/partner/redeem"
