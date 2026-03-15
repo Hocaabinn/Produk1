@@ -364,34 +364,35 @@ export default function DashboardPage() {
         setVerifyError(null);
 
         try {
-            // Find the order by pickup code
+            if (!user) throw new Error('Not authenticated.');
+
+            const normalizedCode = pickupInput.trim();
+            const storeIds = stores.map((store) => store.id);
+
+            // Step 1: Find the pending order by pickup code
             const { data: order, error: findError } = await supabase
                 .from('orders')
-                .select('id, quantity, status, product_id, products(title, store_id)')
-                .eq('pickup_code', pickupInput.trim())
+                .select('id, product_id, store_id, quantity, status')
+                .eq('pickup_code', normalizedCode)
+                .eq('status', 'pending')
                 .single();
 
-            if (findError || !order) {
-                throw new Error('No order found with that pickup code.');
+            if (findError) {
+                if (findError.code === 'PGRST116') {
+                    throw new Error('Invalid pickup code');
+                }
+                throw findError;
             }
 
-            // Validate this order belongs to one of the partner's stores
-            const product = order.products as unknown as { title: string; store_id: string } | null;
-            if (!product) throw new Error('Product associated with this order was not found.');
-
-            const storeIds = stores.map((s) => s.id);
-            if (!storeIds.includes(product.store_id)) {
-                throw new Error('This order does not belong to any of your stores.');
+            if (!order) {
+                throw new Error('Invalid pickup code');
             }
 
-            if (order.status === 'completed') {
-                throw new Error('This order has already been completed.');
-            }
-            if (order.status === 'cancelled') {
-                throw new Error('This order was cancelled.');
+            if (order.store_id && storeIds.length > 0 && !storeIds.includes(order.store_id)) {
+                throw new Error('Invalid pickup code');
             }
 
-            // Mark as completed
+            // Step 2: Update by order id
             const { error: updateError } = await supabase
                 .from('orders')
                 .update({ status: 'completed' })
@@ -399,8 +400,14 @@ export default function DashboardPage() {
 
             if (updateError) throw updateError;
 
+            const { data: product } = await supabase
+                .from('products')
+                .select('title')
+                .eq('id', order.product_id)
+                .maybeSingle();
+
             setVerifyResult({
-                title: product.title,
+                title: product?.title || 'Order',
                 customerName: 'Customer',
                 quantity: order.quantity,
             });

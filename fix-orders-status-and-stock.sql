@@ -30,8 +30,12 @@ RETURNS TRIGGER AS $$
 DECLARE
     affected_rows INTEGER;
 BEGIN
+    IF NEW.quantity IS NULL OR NEW.quantity <= 0 THEN
+        RAISE EXCEPTION 'Order quantity must be greater than zero';
+    END IF;
+
     UPDATE public.products
-    SET stock_quantity = stock_quantity - NEW.quantity
+    SET stock_quantity = GREATEST(stock_quantity - NEW.quantity, 0)
     WHERE id = NEW.product_id
       AND stock_quantity >= NEW.quantity;
 

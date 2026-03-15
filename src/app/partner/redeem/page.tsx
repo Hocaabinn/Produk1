@@ -15,10 +15,7 @@ type RedeemOrder = Order & {
     products?: {
         title: string;
         image_url?: string;
-        store_id?: string;
-        stores?: {
-            owner_id?: string;
-        };
+        partner_id?: string;
     } | null;
 };
 
@@ -28,12 +25,8 @@ function normalizeProductRelation(productRelation: unknown) {
         return null;
     }
 
-    const stores = (product as { stores?: unknown }).stores;
-    const store = Array.isArray(stores) ? stores[0] : stores;
-
     return {
         ...(product as Record<string, unknown>),
-        stores: store && typeof store === 'object' ? store : undefined,
     };
 }
 
@@ -65,14 +58,12 @@ export default function PartnerRedeemPage() {
                     products (
                         title,
                         image_url,
-                        store_id,
-                        stores (
-                            owner_id
-                        )
+                        partner_id
                     ),
                     profiles:user_id (full_name, role)
                 `)
                 .eq('pickup_code', normalizedPickupCode)
+                .eq('status', 'pending')
                 .limit(1);
 
             if (searchError) throw searchError;
