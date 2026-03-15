@@ -107,14 +107,14 @@ This project was developed using the **Vibecoding** philosophy:
 ---
 
 <p align="center">
-Built with 💚 by <strong>Hocaabinn</strong>
+Built with 💚 by <strong>Hocaabinn & Team</strong>
 </p>
 
-```
+
 
 -----
 
-### Why this works:
+Why this works:
 
   * **Startup Vibe:** Using terms like "AI-driven algorithm," "Sustainability ecosystem," and "Green-tech" makes it sound professional.
   * **Clear Value:** It clearly states *why* the app exists (environmental impact) and *how* it works (AI features).
@@ -122,4 +122,4 @@ Built with 💚 by <strong>Hocaabinn</strong>
 
 Would you like me to also generate a **License** file (like MIT License) to make the repository look even more official?
 
-```
+
