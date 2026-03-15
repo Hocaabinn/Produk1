@@ -137,9 +137,9 @@ export default function ProductCard({ product, onRescue }: ProductCardProps) {
                         >
                             Rp{dynamicPrice.currentPrice.toLocaleString('id-ID')}
                         </span>
-                        {dynamicPrice.currentPrice < product.discount_price && (
+                        {dynamicPrice.currentPrice < dynamicPrice.sellerFinalPrice && (
                             <span className="text-xs text-gray-400 line-through">
-                                Rp{product.discount_price.toLocaleString('id-ID')}
+                                Rp{dynamicPrice.sellerFinalPrice.toLocaleString('id-ID')}
                             </span>
                         )}
                         <span className="text-sm text-gray-300 line-through">

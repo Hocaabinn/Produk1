@@ -18,9 +18,6 @@ interface OrderHistory {
     title: string;
     image_url: string;
   };
-  stores: {
-    name: string;
-  };
 }
 
 export default function PartnerHistoryPage() {
@@ -36,42 +33,26 @@ export default function PartnerHistoryPage() {
       setLoading(true);
       setError('');
 
-      // Step 1: Get stores belonging to the partner
-      const { data: storesData, error: storesError } = await supabase
-        .from('stores')
-        .select('id')
-        .eq('owner_id', user.id);
-
-      if (storesError) {
-        console.error('Error fetching stores:', storesError);
-        setError('Gagal memuat riwayat transaksi.');
-        setLoading(false);
-        return;
-      }
-
-      if (!storesData || storesData.length === 0) {
-        setHistory([]);
-        setLoading(false);
-        return;
-      }
-
-      const storeIds = storesData.map((store) => store.id);
-
-      // Step 2: Get completed orders for those stores
+      // Get orders for the partner's products
       const { data: ordersData, error: ordersError } = await supabase
         .from('orders')
         .select(`
           *,
-          products (*),
-          stores (*)
+          products!inner (*)
         `)
-        .in('store_id', storeIds)
-        .eq('status', 'completed')
+        .eq('products.partner_id', user.id)
         .order('created_at', { ascending: false })
         .limit(20);
 
+      console.log("Orders:", ordersData);
+      console.log("Error:", ordersError);
+
       if (ordersError) {
-        console.error('Error fetching orders:', ordersError);
+        console.log("SUPABASE ERROR:", ordersError);
+        console.log("MESSAGE:", ordersError.message);
+        console.log("DETAILS:", ordersError.details);
+        console.log("HINT:", ordersError.hint);
+
         setError('Gagal memuat riwayat transaksi.');
         setLoading(false);
         return;
@@ -91,7 +72,7 @@ export default function PartnerHistoryPage() {
     <ProtectedRoute requiredRole="partner">
       <div className="min-h-screen bg-[#f5f5f5] py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          
+
           {/* Header */}
           <div className="mb-8 flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-sm border border-gray-100">
@@ -159,12 +140,12 @@ export default function PartnerHistoryPage() {
                         Successfully Rescued
                       </div>
                     </div>
-                    
+
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 p-6">
                       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-gray-100">
                         {order.products?.image_url ? (
-                          <img 
-                            src={order.products.image_url} 
+                          <img
+                            src={order.products.image_url}
                             alt={order.products.title}
                             className="h-full w-full object-cover"
                           />
@@ -174,11 +155,11 @@ export default function PartnerHistoryPage() {
                           </div>
                         )}
                       </div>
-                      
+
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <Store className="h-4 w-4 text-gray-400" />
-                          <span className="text-sm font-medium text-gray-600">{order.stores?.name}</span>
+                          <span className="text-sm font-medium text-gray-600">{order.products?.title}</span>
                         </div>
                         <h3 className="text-lg font-bold text-gray-900">{order.products?.title}</h3>
                         <p className="mt-1 text-sm text-gray-500">

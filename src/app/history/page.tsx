@@ -30,9 +30,11 @@ export default function OrderHistoryPage() {
                             )
                         )
                     `)
-                    .eq('products.stores.owner_id', user.id)
-                    .eq('status', 'completed')
+                    .eq('user_id', user.id)
                     .order('created_at', { ascending: false });
+
+                console.log("Orders:", data);
+                console.log("Error:", error);
 
                 if (error) {
                     console.error('Error dari database:', error);

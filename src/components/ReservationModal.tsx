@@ -73,6 +73,7 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                 .insert({
                     user_id: user.id,
                     product_id: product.id,
+                    store_id: product.store_id, // Explicitly link order to store
                     quantity,
                     total_price: totalPrice,
                     pickup_code: code,
@@ -313,9 +314,9 @@ export default function ReservationModal({ product, onClose, onSuccess }: Reserv
                                         <span className="text-lg font-bold text-primary">
                                             Rp{unitPrice.toLocaleString('id-ID')}
                                         </span>
-                                        {unitPrice < product.discount_price && (
+                                        {unitPrice < dynamicPrice.sellerFinalPrice && (
                                             <span className="text-xs text-gray-400 line-through">
-                                                Rp{product.discount_price.toLocaleString('id-ID')}
+                                                Rp{dynamicPrice.sellerFinalPrice.toLocaleString('id-ID')}
                                             </span>
                                         )}
                                         <span className="text-xs text-gray-300 line-through">

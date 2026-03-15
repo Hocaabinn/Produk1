@@ -11,9 +11,11 @@ export interface Store {
 export interface Product {
     id: string;
     store_id: string;
+    partner_id?: string;
     title: string;
     description?: string;
     original_price: number;
+    /** Discount amount in Rupiah (stored as discount_price in DB) */
     discount_price: number;
     stock_quantity: number;
     expiry_date: string;

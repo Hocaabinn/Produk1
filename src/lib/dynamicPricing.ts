@@ -10,13 +10,15 @@
 export interface DynamicPriceResult {
     /** Harga saat ini setelah dynamic pricing */
     currentPrice: number;
-    /** Harga diskon awal (dari database) */
-    baseDiscountPrice: number;
+    /** Harga final setelah diskon seller (originalPrice - discountAmount) */
+    sellerFinalPrice: number;
+    /** Persentase diskon seller dari harga original (0-100) */
+    sellerDiscountPercent: number;
     /** Harga original */
     originalPrice: number;
     /** Persentase diskon total dari harga original (0-100) */
     totalDiscountPercent: number;
-    /** Persentase dynamic discount tambahan dari base discount (0-100) */
+    /** Persentase dynamic discount tambahan dari AI (0-100), di atas seller discount */
     dynamicDiscountPercent: number;
     /** Label urgency: 'normal' | 'dropping' | 'flash-sale' | 'last-chance' */
     urgencyLabel: 'normal' | 'dropping' | 'flash-sale' | 'last-chance';
@@ -53,28 +55,41 @@ function easeInOut(t: number): number {
  * Calculate dynamic price based on time remaining
  * 
  * @param originalPrice - Harga asli produk
- * @param discountPrice - Harga diskon awal (dari partner)
+ * @param discountAmount - Potongan harga nominal dari seller (dalam Rupiah)
  * @param expiryDate - Waktu kadaluarsa
  * @param createdAt - Waktu listing dibuat (optional, defaults to 24h before expiry)
  */
 export function calculateDynamicPrice(
     originalPrice: number,
-    discountPrice: number,
+    discountAmount: number,
     expiryDate: string,
     createdAt?: string,
 ): DynamicPriceResult {
+    // ── NaN-safe input sanitization ──
+    const safeOriginalPrice = Math.max(0, Number(originalPrice) || 0);
+    const safeDiscountAmount = Math.max(0, Math.min(Number(discountAmount) || 0, safeOriginalPrice > 0 ? safeOriginalPrice - 1 : 0));
+
     const now = Date.now();
     const expiryTime = new Date(expiryDate).getTime();
-    const timeRemaining = expiryTime - now;
+    const timeRemaining = isNaN(expiryTime) ? 0 : expiryTime - now;
+
+    // Seller's base calculations
+    const sellerFinalPrice = Math.max(0, safeOriginalPrice - safeDiscountAmount);
+    const sellerDiscountPercent = safeOriginalPrice > 0
+        ? Math.round((safeDiscountAmount / safeOriginalPrice) * 100)
+        : 0;
 
     // If expired
     if (timeRemaining <= 0) {
+        const expiredDiscountPercent = 90;
+        const expiredPrice = Math.round(safeOriginalPrice * 0.1); // 90% off
         return {
-            currentPrice: Math.round(originalPrice * 0.1), // 90% off - super low
-            baseDiscountPrice: discountPrice,
-            originalPrice,
-            totalDiscountPercent: 90,
-            dynamicDiscountPercent: Math.round(((discountPrice - originalPrice * 0.1) / discountPrice) * 100),
+            currentPrice: expiredPrice,
+            sellerFinalPrice,
+            sellerDiscountPercent,
+            originalPrice: safeOriginalPrice,
+            totalDiscountPercent: expiredDiscountPercent,
+            dynamicDiscountPercent: expiredDiscountPercent - sellerDiscountPercent,
             urgencyLabel: 'last-chance',
             urgencyColor: 'from-red-500 to-rose-600',
             urgencyIcon: '🔥',
@@ -88,62 +103,73 @@ export function calculateDynamicPrice(
     const createdTime = createdAt
         ? new Date(createdAt).getTime()
         : expiryTime - 24 * 60 * 60 * 1000; // Default: assume 24h listing
-    const totalTimespan = expiryTime - createdTime;
+    const totalTimespan = Math.max(1, expiryTime - createdTime); // Prevent division by zero
     const timeRatio = Math.min(1, Math.max(0, timeRemaining / totalTimespan));
 
     const hoursLeft = timeRemaining / (1000 * 60 * 60);
 
-    // ── Dynamic Pricing Algorithm ──
-    // Phase 1: Normal (>6h left) - no extra discount
-    // Phase 2: Dropping (2-6h left) - gradual 5-25% extra discount
-    // Phase 3: Flash Sale (1-2h left) - 25-45% extra discount
-    // Phase 4: Last Chance (<1h left) - 45-65% extra discount
+    // ── AI Dynamic Pricing Algorithm ──
+    // AI starts from seller's base discount % and increases it over time.
+    // The discount is always calculated from originalPrice.
+    //
+    // Phase 1: Normal (>3h left) - seller discount only (no AI boost)
+    // Phase 2: Dropping (1-3h left) - AI boosts to ~25% total discount minimum
+    // Phase 3: Flash Sale (0.5-1h left) - AI boosts to ~35% total discount minimum
+    // Phase 4: Last Chance (<0.5h left) - AI boosts to ~50% total discount minimum
 
-    let dynamicDiscountFactor = 0; // 0 = no extra discount, 1 = max extra discount
+    let aiTargetDiscountPercent = sellerDiscountPercent; // Start from seller's base
 
-    if (hoursLeft > 6) {
-        // Normal phase - slight discount for early birds
-        dynamicDiscountFactor = 0.05 * easeInOut(1 - (hoursLeft - 6) / 18); // 0-5%
-    } else if (hoursLeft > 2) {
-        // Dropping phase
-        const phaseProgress = 1 - (hoursLeft - 2) / 4; // 0→1 as 6h→2h
-        dynamicDiscountFactor = 0.05 + 0.20 * easeInOut(phaseProgress); // 5-25%
+    if (hoursLeft > 3) {
+        // Normal phase - seller discount only, slight AI nudge near threshold
+        const nudge = 2 * easeInOut(Math.max(0, 1 - (hoursLeft - 3) / 21)); // 0-2% nudge
+        aiTargetDiscountPercent = sellerDiscountPercent + nudge;
     } else if (hoursLeft > 1) {
-        // Flash sale phase
-        const phaseProgress = 1 - (hoursLeft - 1) / 1; // 0→1 as 2h→1h
-        dynamicDiscountFactor = 0.25 + 0.20 * easeInOut(phaseProgress); // 25-45%
+        // Dropping phase: ramp toward 25% minimum (or higher if seller already above)
+        const phaseProgress = easeInOut(1 - (hoursLeft - 1) / 2); // 0→1 as 3h→1h
+        const targetMin = Math.max(sellerDiscountPercent, 25);
+        aiTargetDiscountPercent = sellerDiscountPercent + (targetMin - sellerDiscountPercent) * phaseProgress;
+    } else if (hoursLeft > 0.5) {
+        // Flash sale phase: ramp toward 35% minimum
+        const phaseProgress = easeInOut(1 - (hoursLeft - 0.5) / 0.5); // 0→1 as 1h→0.5h
+        const targetMin = Math.max(sellerDiscountPercent, 35);
+        aiTargetDiscountPercent = Math.max(sellerDiscountPercent, 25) + (targetMin - Math.max(sellerDiscountPercent, 25)) * phaseProgress;
     } else {
-        // Last chance phase
-        const phaseProgress = 1 - hoursLeft; // 0→1 as 1h→0h
-        dynamicDiscountFactor = 0.45 + 0.20 * sigmoid(phaseProgress, 4); // 45-65%
+        // Last chance phase: ramp toward 50% minimum
+        const phaseProgress = sigmoid(1 - hoursLeft / 0.5, 4); // 0→1 as 0.5h→0h
+        const targetMin = Math.max(sellerDiscountPercent, 50);
+        const baseForPhase = Math.max(sellerDiscountPercent, 35);
+        aiTargetDiscountPercent = baseForPhase + (targetMin - baseForPhase) * phaseProgress;
     }
 
-    // Calculate final price
-    // Apply dynamic discount on top of the base discount price
-    const dynamicReduction = discountPrice * dynamicDiscountFactor;
-    const rawPrice = discountPrice - dynamicReduction;
+    // Ensure AI discount never goes below seller's base discount
+    aiTargetDiscountPercent = Math.max(aiTargetDiscountPercent, sellerDiscountPercent);
+
+    // Calculate final price from originalPrice
+    const rawPrice = safeOriginalPrice * (1 - aiTargetDiscountPercent / 100);
 
     // Floor price: never go below 10% of original
-    const floorPrice = originalPrice * 0.10;
+    const floorPrice = safeOriginalPrice * 0.10;
     const currentPrice = Math.max(floorPrice, Math.round(rawPrice / 100) * 100); // Round to nearest 100 Rp
 
-    const totalDiscountPercent = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
-    const dynamicDiscountPercent = Math.round(dynamicDiscountFactor * 100);
+    const totalDiscountPercent = safeOriginalPrice > 0
+        ? Math.round(((safeOriginalPrice - currentPrice) / safeOriginalPrice) * 100)
+        : 0;
+    const dynamicDiscountPercent = Math.max(0, totalDiscountPercent - sellerDiscountPercent);
 
     // Determine urgency label
     let urgencyLabel: DynamicPriceResult['urgencyLabel'];
     let urgencyColor: string;
     let urgencyIcon: string;
 
-    if (hoursLeft > 6) {
+    if (hoursLeft > 3) {
         urgencyLabel = 'normal';
         urgencyColor = 'from-emerald-400 to-green-500';
         urgencyIcon = '🟢';
-    } else if (hoursLeft > 2) {
+    } else if (hoursLeft > 1) {
         urgencyLabel = 'dropping';
         urgencyColor = 'from-amber-400 to-orange-500';
         urgencyIcon = '📉';
-    } else if (hoursLeft > 1) {
+    } else if (hoursLeft > 0.5) {
         urgencyLabel = 'flash-sale';
         urgencyColor = 'from-orange-500 to-red-500';
         urgencyIcon = '⚡';
@@ -155,8 +181,9 @@ export function calculateDynamicPrice(
 
     return {
         currentPrice,
-        baseDiscountPrice: discountPrice,
-        originalPrice,
+        sellerFinalPrice,
+        sellerDiscountPercent,
+        originalPrice: safeOriginalPrice,
         totalDiscountPercent,
         dynamicDiscountPercent,
         urgencyLabel,

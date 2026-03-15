@@ -11,7 +11,7 @@ import {
 
 interface DynamicPriceBadgeProps {
     originalPrice: number;
-    discountPrice: number;
+    discountAmount: number;
     expiryDate: string;
     createdAt?: string;
     /** When true, show price inline (compact mode for cards) */
@@ -22,14 +22,14 @@ interface DynamicPriceBadgeProps {
 
 export default function DynamicPriceBadge({
     originalPrice,
-    discountPrice,
+    discountAmount,
     expiryDate,
     createdAt,
     compact = false,
     onPriceChange,
 }: DynamicPriceBadgeProps) {
     const [priceResult, setPriceResult] = useState<DynamicPriceResult>(
-        calculateDynamicPrice(originalPrice, discountPrice, expiryDate, createdAt)
+        calculateDynamicPrice(originalPrice, discountAmount, expiryDate, createdAt)
     );
     const [showDetail, setShowDetail] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -37,7 +37,7 @@ export default function DynamicPriceBadge({
     useEffect(() => {
         // Update price every 30 seconds
         const interval = setInterval(() => {
-            const newResult = calculateDynamicPrice(originalPrice, discountPrice, expiryDate, createdAt);
+            const newResult = calculateDynamicPrice(originalPrice, discountAmount, expiryDate, createdAt);
 
             // Trigger animation if price changed
             if (newResult.currentPrice !== priceResult.currentPrice) {
@@ -53,7 +53,7 @@ export default function DynamicPriceBadge({
         onPriceChange?.(priceResult);
 
         return () => clearInterval(interval);
-    }, [originalPrice, discountPrice, expiryDate, createdAt]);
+    }, [originalPrice, discountAmount, expiryDate, createdAt]);
 
     const label = getDynamicPriceLabel(priceResult);
     const description = getDynamicPriceDescription(priceResult);
@@ -88,9 +88,9 @@ export default function DynamicPriceBadge({
                     <span className={`text-xl font-bold text-primary transition-all duration-500 ${isAnimating ? 'scale-110 text-green-500' : ''}`}>
                         Rp{priceResult.currentPrice.toLocaleString('id-ID')}
                     </span>
-                    {priceResult.currentPrice < discountPrice && (
+                    {priceResult.currentPrice < priceResult.sellerFinalPrice && (
                         <span className="text-xs text-gray-400 line-through">
-                            Rp{discountPrice.toLocaleString('id-ID')}
+                            Rp{priceResult.sellerFinalPrice.toLocaleString('id-ID')}
                         </span>
                     )}
                     <span className="text-sm text-gray-400 line-through">
@@ -153,7 +153,7 @@ export default function DynamicPriceBadge({
                         </div>
                         <div className="flex items-center justify-between">
                             <span>Diskon Partner</span>
-                            <span className="font-medium">Rp{discountPrice.toLocaleString('id-ID')}</span>
+                            <span className="font-medium">Rp{priceResult.sellerFinalPrice.toLocaleString('id-ID')} ({priceResult.sellerDiscountPercent}%)</span>
                         </div>
                         {priceResult.dynamicDiscountPercent > 0 && (
                             <div className="flex items-center justify-between font-bold">

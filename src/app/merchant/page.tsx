@@ -34,7 +34,7 @@ import {
 interface FoodFormData {
     title: string;
     original_price: string;
-    discount_price: string;
+    discount_amount: string;
     stock_quantity: string;
     expiry_date: string;
     store_id: string;
@@ -44,7 +44,7 @@ interface FoodFormData {
 const initialFoodForm: FoodFormData = {
     title: '',
     original_price: '',
-    discount_price: '',
+    discount_amount: '',
     stock_quantity: '',
     expiry_date: '',
     store_id: '',
@@ -282,9 +282,15 @@ export default function DashboardPage() {
         let uploadedFilePath: string | null = null;
 
         try {
+            if (!user) throw new Error('Anda harus login.');
             if (!foodForm.store_id) throw new Error('Please select a store.');
-            if (Number(foodForm.discount_price) >= Number(foodForm.original_price)) {
-                throw new Error('Discount price must be lower than original price.');
+            const origPrice = Number(foodForm.original_price);
+            const discAmt = Number(foodForm.discount_amount);
+            if (discAmt <= 0) {
+                throw new Error('Discount amount must be greater than 0.');
+            }
+            if (discAmt >= origPrice) {
+                throw new Error('Discount amount must be less than original price.');
             }
 
             // Upload image if selected
@@ -299,9 +305,10 @@ export default function DashboardPage() {
 
             const { error } = await supabase.from('products').insert({
                 store_id: foodForm.store_id,
+                partner_id: user.id,
                 title: foodForm.title,
-                original_price: Number(foodForm.original_price),
-                discount_price: Number(foodForm.discount_price),
+                original_price: origPrice,
+                discount_price: discAmt,
                 stock_quantity: Number(foodForm.stock_quantity),
                 expiry_date: foodForm.expiry_date,
                 co2_saved: Number(foodForm.co2_saved),
@@ -647,20 +654,35 @@ export default function DashboardPage() {
                                 <div>
                                     <label className={labelClass}>
                                         <DollarSign className="h-4 w-4 text-primary" />
-                                        Discount Price (Rp)
+                                        Discount Amount (Rp)
                                     </label>
                                     <input
                                         type="number"
-                                        name="discount_price"
-                                        value={foodForm.discount_price}
+                                        name="discount_amount"
+                                        value={foodForm.discount_amount}
                                         onChange={handleFoodChange}
                                         required
                                         min="0"
-                                        placeholder="12000"
+                                        placeholder="5000"
                                         className={inputClass}
                                     />
                                 </div>
                             </div>
+
+                            {/* Live computed preview */}
+                            {foodForm.original_price && foodForm.discount_amount && Number(foodForm.discount_amount) < Number(foodForm.original_price) && (
+                                <div className="flex items-center gap-3 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm dark:bg-emerald-900/20 dark:border-emerald-800">
+                                    <Brain className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+                                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-emerald-700 dark:text-emerald-400">
+                                        <span>
+                                            Final Price: <strong>Rp{(Number(foodForm.original_price) - Number(foodForm.discount_amount)).toLocaleString('id-ID')}</strong>
+                                        </span>
+                                        <span>
+                                            Discount: <strong>{Math.round((Number(foodForm.discount_amount) / Number(foodForm.original_price)) * 100)}%</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Stock & Expiry row */}
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -902,7 +924,7 @@ export default function DashboardPage() {
                                                     )}
                                                     <span className="flex items-center gap-1">
                                                         <DollarSign className="h-3 w-3" />
-                                                        Rp{Number(item.discount_price).toLocaleString()}
+                                                        Rp{Number(item.discount_price).toLocaleString()} off
                                                     </span>
                                                     <span className="flex items-center gap-1">
                                                         <Layers className="h-3 w-3" />
