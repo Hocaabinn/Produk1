@@ -13,7 +13,11 @@ const steps = [
         title: 'Pilih Makanan',
         description:
             'Temukan surplus makanan berkualitas dari toko-toko favoritmu di sekitar lokasi dengan cepat dan mudah.',
+<<<<<<< HEAD
         image: '/fitur2.mp4',
+=======
+        image: '/Fitur2.mp4',
+>>>>>>> 59078d26e018fb5fe874e988daee85ba0518157d
     },
     {
         icon: Wallet,
@@ -21,7 +25,11 @@ const steps = [
         title: 'Pesan & Bayar',
         description:
             'Amankan porsimu dengan harga yang jauh lebih hemat. Bayar langsung dari aplikasi.',
+<<<<<<< HEAD
         image: '/fitur1.mp4',
+=======
+        image: '/Fitur1.mp4',
+>>>>>>> 59078d26e018fb5fe874e988daee85ba0518157d
     },
     {
         icon: Store,
@@ -29,7 +37,11 @@ const steps = [
         title: 'Ambil di Lokasi',
         description:
             'Kunjungi toko pada waktu yang ditentukan untuk pickup pesananmu.',
+<<<<<<< HEAD
         image: '/fitur3.mp4',
+=======
+        image: '/Fitur3.mp4',
+>>>>>>> 59078d26e018fb5fe874e988daee85ba0518157d
     },
 ];
 
